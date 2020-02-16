@@ -38,7 +38,8 @@ public class SimilarityMap
 
 		// compute pairwise similarities between item profiles
 		for(Integer id1: itemIds)
-			for(Integer id2: itemIds)
+			itemIds.parallelStream().forEach(id2 -> {
+			//itemIds.stream().forEach(id2 -> {
 				if(id2 < id1) {
 					if(metric instanceof alg.np.similarity.metric.GenreMetric ||
 							metric instanceof alg.np.similarity.metric.GenomeMetric ||
@@ -59,6 +60,8 @@ public class SimilarityMap
 						System.exit(1);
 					}
 				}
+			});
+				
 	}
 
 	/**
@@ -96,7 +99,7 @@ public class SimilarityMap
 	 * @param the numeric ID of the first profile
 	 * @param the numeric ID of the second profile
 	 */
-	public void setSimilarity(final Integer id1, final Integer id2, final double sim)
+	public synchronized void setSimilarity(final Integer id1, final Integer id2, final double sim)
 	{
 		Profile profile = simMap.containsKey(id1) ? simMap.get(id1) : new Profile(id1);
 		profile.addValue(id2, new Double(sim));

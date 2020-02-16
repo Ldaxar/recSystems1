@@ -33,25 +33,17 @@ public class GenomeMetric implements SimilarityMetric
 	 */
 	public double getItemSimilarity(final Integer X, final Integer Y)
 	{
-		class Pair {
-			protected Pair(Double first, Double second) {
-				this.first = first;
-				this.second = second;
-			}
-			protected Double first;
-			protected Double second;
-		}
 		// calculate similarity using weighted Jaccard
 		Profile p1 = reader.getItem(X).getGenomeScores(); 
 		Profile p2 = reader.getItem(Y).getGenomeScores();		
 		Pair sums = p1.getCommonIds(p2)
-				.stream().map(id -> {
-					return new Pair(p1.getValue(id),p2.getValue(id));
-				})
-				.reduce(new Pair(0.0,0.0) , (sum, newElement) -> {
-					sum.first+=Math.min(newElement.first, newElement.second);
-					sum.second+=Math.max(newElement.first, newElement.second);
-					return sum;
+			.stream().map(id -> {
+				return new Pair(p1.getValue(id),p2.getValue(id));
+			})
+			.reduce(new Pair(0.0,0.0) , (sum, newElement) -> {
+				sum.first+=Math.min(newElement.first, newElement.second);
+				sum.second+=Math.max(newElement.first, newElement.second);
+				return sum;
 		});		
 		return (sums.first/sums.second);
 	}

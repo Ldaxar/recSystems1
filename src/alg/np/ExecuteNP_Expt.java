@@ -45,10 +45,11 @@ public class ExecuteNP_Expt {
 		String[] algorithms = {"Genre", "Genome", "Rating", "IncConfidence"};
 
 		for (int i = 0; i < metrics.length; i++) {
+			long start = System.currentTimeMillis();
 			// create a NonPersonalisedRecommender object using the current similarity metric (metrics[i])
 			NonPersonalisedRecommender alg = new NonPersonalisedRecommender(reader, metrics[i]);
 			// create an Evaluator object using the current non-personalised recommender algorithm
-			long start = System.currentTimeMillis();
+			
 			Evaluator eval = new Evaluator(alg, reader, k);
 			
 			// display results for the current non-personalised recommender algorithm
