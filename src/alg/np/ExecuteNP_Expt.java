@@ -45,7 +45,6 @@ public class ExecuteNP_Expt {
 		String[] algorithms = {"Genre", "Genome", "Rating", "IncConfidence"};
 
 		for (int i = 0; i < metrics.length; i++) {
-			long start = System.currentTimeMillis();
 			// create a NonPersonalisedRecommender object using the current similarity metric (metrics[i])
 			NonPersonalisedRecommender alg = new NonPersonalisedRecommender(reader, metrics[i]);
 			// create an Evaluator object using the current non-personalised recommender algorithm
@@ -59,8 +58,6 @@ public class ExecuteNP_Expt {
 					eval.getRecommendationCoverage() + "," +
 					eval.getItemSpaceCoverage() + "," +
 					eval.getRecommendationPopularity());
-			long end = System.currentTimeMillis();
-			System.out.println("Time: "+(end-start));
 		}
 	}
 }
